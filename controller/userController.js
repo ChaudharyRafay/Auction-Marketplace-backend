@@ -103,13 +103,8 @@ const contactEmail = (name, email, message) => {
     });
   });
 };
-const accountSid = "AC6951781ec10d5bfc6c7e7c41fdb9c49d";
-const authToken = "50f1e4c1fd4551c3d52294cceeb0c9ba";
 
-// const accountSid = "AC99374be7626ac4fe2e81993a618d9d49";
-// const authToken = "994671e0c7eaaa660712bb48f226160b";
-
-const client = twilio(accountSid, authToken);
+const client = twilio(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
 export const SignUpEmail = catchAsync(async (req, res, next) => {
   const { username, email, password } = req.body;
   try {
@@ -212,7 +207,8 @@ export const verifyAccount = catchAsync(async (req, res, next) => {
       );
       return res.status(200).json({
         user: {
-          id: result._id,
+          _id: result._id,
+          username: result.username,
           email: result.email,
           image: result.image,
           token,
@@ -304,7 +300,7 @@ export const loginUser = catchAsync(async (req, res, next) => {
       success: true,
       message: "User logged in successfully",
       user: {
-        id: user._id,
+        _id: user._id,
         [userField]: user[userField],
         username: user.username,
         image: user.image,
@@ -407,10 +403,8 @@ export const setting = catchAsync(async (req, res, next) => {
   }
 });
 export const sendCodePhone = catchAsync(async (req, res, next) => {
-  console.log(req.body);
-  const { userId, code, phoneNo } = req.body;
+  const { code, phoneNo } = req.body;
   const validPhone = "+" + phoneNo;
-  console.log(validPhone);
   client.messages
     .create({
       body: `Your OTP code is ${code}`,
