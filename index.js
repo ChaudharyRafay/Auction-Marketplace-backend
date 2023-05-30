@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "uploads")));
 mongoose
-  .connect(process.env.DATABASE)
+  .connect(process.env.LOCAL_DATABASE)
   .then(() => console.log("db connected"))
   .catch((err) => console.error(err));
 

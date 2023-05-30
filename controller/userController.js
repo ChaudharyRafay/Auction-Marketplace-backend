@@ -34,13 +34,13 @@ const emailSent = (code, email, username) => {
       secure: true,
       service: "gmail",
       auth: {
-        user: "rafaymuhammad245@gmail.com",
-        pass: "ptcanmqgfakfebam",
+        user: "hn380322@gmail.com",
+        pass: "mfolajhvwknqvabt",
       },
     });
 
     const mailOptions = {
-      from: "rafaymuhammad245@gmail.com",
+      from: "hn380322@gmail.com",
       to: email,
       subject: "Verify your Auction Marketplace account",
       html: output,
@@ -80,14 +80,14 @@ const contactEmail = (name, email, message) => {
       secure: true,
       service: "gmail",
       auth: {
-        user: "rafaymuhammad245@gmail.com",
-        pass: "ptcanmqgfakfebam",
+        user: "hn380322@gmail.com",
+        pass: "mfolajhvwknqvabt",
       },
     });
 
     const mailOptions = {
       from: email,
-      to: "rafaymuhammad245@gmail.com",
+      to: "hn380322@gmail.com",
       subject: "New Contact Inquiry",
       html: output,
     };
@@ -166,21 +166,33 @@ export const SignUpPhone = catchAsync(async (req, res, next) => {
     if (newUser) {
       const code = crypto.randomBytes(3).toString("hex").toUpperCase();
       console.log(phone);
-      // client.messages
-      //   .create({
-      //     body: `Your verification code is ${code}`,
-      //     from: "+12542805087", // Twilio phone number
-      //     to: phone, // User's phone number
-      //   })
-      //   .then((message) => console.log(message.sid))
-      //   .catch((err) => console.error(err));
+      client.messages
+        .create({
+          body: `Your OTP code is ${code}`,
+          // from: "+12543182690", // Twilio phone number
+          from: "+13152825704",
+          to: phone, // User's phone number
+        })
+        .then((message) => {
+          console.log(message.sid);
+          return res.status(200).json({
+            success: true,
+            userId: newUser._id,
+            phone,
+            code,
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).json({ err: err });
+        });
 
-      return res.status(200).json({
-        success: true,
-        userId: newUser._id,
-        phone,
-        code,
-      });
+      // return res.status(200).json({
+      //   success: true,
+      //   userId: newUser._id,
+      //   phone,
+      //   code,
+      // });
     }
   } catch (error) {
     console.log(error);

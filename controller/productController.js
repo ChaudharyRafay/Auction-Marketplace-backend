@@ -331,7 +331,7 @@ export const showWinnerProducts = catchAsync(async (req, res, next) => {
       }
     } else {
       // Step 3: No products found in the first condition
-      res.status(200).json({
+      return res.status(200).json({
         message: "No product found",
         products: [],
         pendingProducts: [],
