@@ -32,6 +32,21 @@ export const createProduct = catchAsync(async (req, res, next) => {
     res.status(500).json({ message: error.stack });
   }
 });
+export const deleteProduct = catchAsync(async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const result = await productModel.findOneAndDelete(
+      { _id: req.body.productId },
+      { new: true }
+    );
+    if (result) {
+      res.status(200).json();
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.stack });
+  }
+});
 export const getProduct = catchAsync(async (req, res, next) => {
   try {
     const currentDate = new Date();

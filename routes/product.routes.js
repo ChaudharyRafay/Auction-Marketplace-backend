@@ -7,6 +7,7 @@ import multer from "multer";
 import { fileURLToPath } from "url";
 import {
   createProduct,
+  deleteProduct,
   getProduct,
   getProductsWonByBidders,
   getReviewProduct,
@@ -42,7 +43,7 @@ let upload = multer({ storage, fileFilter });
 route.post("/createProduct", upload.single("image"), createProduct);
 
 route.get("/getProduct", getProduct);
-
+route.post("/deleteProduct", deleteProduct);
 route.post("/specificProduct", getSpecificProduct);
 route.post("/placeBid", placeBid);
 route.post("/getBidWinnerProducts", showWinnerProducts);
