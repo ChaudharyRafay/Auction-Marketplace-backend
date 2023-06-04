@@ -34,7 +34,6 @@ export const createProduct = catchAsync(async (req, res, next) => {
 });
 export const deleteProduct = catchAsync(async (req, res, next) => {
   try {
-    console.log(req.body);
     const result = await productModel.findOneAndDelete(
       { _id: req.body.productId },
       { new: true }
